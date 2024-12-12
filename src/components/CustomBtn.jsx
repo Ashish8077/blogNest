@@ -15,7 +15,7 @@ const CustomBtn = (
     <button
       ref={ref}
       type={type}
-      className={`p-2 rounded-md w-full ${bgColor} ${textColor} ${className}`}
+      className={`p-2 rounded-md  ${bgColor} ${textColor} ${className}`}
       {...props}>
       {children}
     </button>

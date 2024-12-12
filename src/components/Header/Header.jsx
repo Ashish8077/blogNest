@@ -1,22 +1,22 @@
 import React, { useState } from "react";
-import { Logo } from "../index";
+import { Logo, LogoutBtn } from "../index";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import LogoutBtn from "./LogoutBtn";
+
 import { TfiAlignCenter } from "react-icons/tfi";
 import { IoMdClose } from "react-icons/io";
+
 const Header = () => {
   const authStatus = useSelector((state) => state.auth.status);
   const navigate = useNavigate();
   const [openMenu, setOpenMenu] = useState(false);
 
   const navItems = [
-    { name: "Home", slug: "/", active: !authStatus },
+    { name: "Home", slug: "/", active: true },
     { name: "Login", slug: "/login", active: !authStatus },
     { name: "signup", slug: "/signup", active: !authStatus },
     { name: "All Posts", slug: "/all-posts", active: authStatus },
     { name: "Add Post", slug: "/add-posts", active: authStatus },
-    { name: "Logout", slug: "/logout", active: authStatus },
   ];
   return (
     <header className="py-3 shadow bg-gray-300 ">
@@ -34,7 +34,7 @@ const Header = () => {
               </button>
             ) : (
               <button>
-                <TfiAlignCenter  size={24} onClick={() => setOpenMenu(true)} />
+                <TfiAlignCenter size={24} onClick={() => setOpenMenu(true)} />
               </button>
             )}
           </div>
@@ -58,6 +58,11 @@ const Header = () => {
                 </button>
               </li>
             ) : null
+          )}
+          {authStatus && (
+            <li>
+              <LogoutBtn />
+            </li>
           )}
         </ul>
       </nav>
