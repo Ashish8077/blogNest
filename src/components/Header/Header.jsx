@@ -16,7 +16,7 @@ const Header = () => {
     { name: "Login", slug: "/login", active: !authStatus },
     { name: "signup", slug: "/signup", active: !authStatus },
     { name: "All Posts", slug: "/all-posts", active: authStatus },
-    { name: "Add Post", slug: "/add-posts", active: authStatus },
+    { name: "Add Post", slug: "/add-post", active: authStatus },
   ];
   return (
     <header className="py-3 shadow bg-gray-300 ">
@@ -42,7 +42,7 @@ const Header = () => {
         <ul
           className={` ${
             openMenu
-              ? "flex bg-gray-300   w-full flex-col absolute top-12 gap-5 text-center "
+              ? "flex bg-gray-300   w-full flex-col absolute top-12 gap-5 text-center z-50 "
               : "hidden"
           }   sm:flex sm:ml-auto sm:w-auto sm:flex-row sm:static sm:gap-0 mr-4 `}>
           {navItems.map((item) =>

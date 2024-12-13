@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CustomInput, CustomBtn } from "./index";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -10,6 +10,8 @@ const Login = () => {
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
   const [error, setError] = useState();
+  
+
   const login = async (data) => {
     try {
       setError("");
@@ -20,8 +22,8 @@ const Login = () => {
           dispatch(authLogin(userData));
           navigate("/");
         }
-      }else if(session.error){
-        setError(session.error)
+      } else if (session.error) {
+        setError(session.error);
       }
     } catch (error) {
       setError(error.message);

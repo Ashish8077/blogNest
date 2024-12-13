@@ -33,10 +33,16 @@ export class AuthService {
 
   async login({ email, password }) {
     try {
-      await this.account.createEmailPasswordSession(
-        email,
-        password
-      );
+      // Check if the user is already logged in (based on your session management)
+      // const currentSession = await this.account.getSession("current");
+      // if (currentSession) {
+      //   return {
+      //     success: true,
+      //     message: "You are already logged in",
+      //   };
+      // }
+
+      await this.account.createEmailPasswordSession(email, password);
       return {
         message: "You have been logged in successfully.",
       };
@@ -57,11 +63,7 @@ export class AuthService {
 
   async logout() {
     try {
-      await this.account.deleteSessions();
-      return {
-        success: true,
-        message: "You have been logged out successfully.",
-      };
+      return await this.account.deleteSessions();
     } catch (error) {
       console.error("Error logging out:", error.message);
       return {

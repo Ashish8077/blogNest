@@ -13,7 +13,7 @@ const Signup = () => {
   const create = async (data) => {
     try {
       const userData = await authService.createAccount(data);
-      console.log(userData);
+     
       if (userData) {
         const currentUser = await authService.getCurrentUser();
         if (currentUser) dispatch(login(currentUser));
@@ -70,20 +70,22 @@ const Signup = () => {
               required: true,
               validate: {
                 minLength: (value) =>
-                  value.length >= 6 ||
-                  "Password must be at least 6 characters long",
-                uppercase: (value) =>
-                  /[A-Z]/.test(value) ||
-                  "Password must contain at least one uppercase letter",
-                specialChar: (value) =>
-                  /[!@#$%^&*(),.?":{}|<>]/.test(value) ||
-                  "Password must contain at least one special character",
+                  value.length >= 8 ||
+                  "Password must be at least 8 characters long",
+                // uppercase: (value) =>
+                //   /[A-Z]/.test(value) ||
+                //   "Password must contain at least one uppercase letter",
+                // specialChar: (value) =>
+                //   /[!@#$%^&*(),.?":{}|<>]/.test(value) ||
+                //   "Password must contain at least one special character",
               },
             })}
           />
         </div>
         <div className="w-full">
-          <CustomBtn type="submit" className=" bg-[#3182CE] hover:bg-[#2B6CB0] w-full">
+          <CustomBtn
+            type="submit"
+            className=" bg-[#3182CE] hover:bg-[#2B6CB0] w-full">
             Create Account
           </CustomBtn>
         </div>

@@ -7,14 +7,11 @@ const LogoutBtn = () => {
   const dispatch = useDispatch();
   const logoutHandler = async () => {
     try {
-      const response = await authService.logout();
-      if (response.success) {
+      authService.logout().then(() => {
         dispatch(logout());
-      } else {
-        console.error("Logout failed:", response.error); // Handle any errors
-      }
+      });
     } catch (error) {
-      console.error("An error occurred during logout:", error.message);
+      console.error("Logout failed:", error);
     }
   };
   return (

@@ -15,8 +15,8 @@ const Postform = ({ post }) => {
         status: post?.status || "active",
       },
     });
-  const navigate = useNavigate;
-  const userData = useSelector((state) => state.auth.status);
+  const navigate = useNavigate();
+  const userData = useSelector((state) => state.auth.userData);
 
   const submit = async (data) => {
     //if an existing post is being edited
@@ -50,15 +50,15 @@ const Postform = ({ post }) => {
           userId: userData.$id,
         });
         // If the new post is successfully created
-        if (dbPost) {
+        if (dbPost.success) {
           // Navigate to the newly created post
-          navigate(`/post/${dbPost.$id}`);
+          navigate(`/post/${dbPost.post.$id}`);
         }
       }
     }
   };
 
-  const slugTransfrom = useCallback((value) => {
+  const slugTransform = useCallback((value) => {
     if (value && typeof value === "string") {
       return value
         .trim() // Removes leading/trailing whitespace
@@ -67,6 +67,7 @@ const Postform = ({ post }) => {
         .replace(/\s+/g, "-") // Replaces one or more spaces with a single hyphen
         .replace(/--+/g, "-"); // Replaces multiple consecutive hyphens with a single one
     }
+    return "";
   }, []);
 
   //hook to watch for changes in the form fields and update the "slug" field based on the "title" field.
@@ -75,17 +76,17 @@ const Postform = ({ post }) => {
       // Check if the field that was changed is the "title" field
       if (name === "title") {
         // When the "title" field changes, generate a "slug" using the title value
-        // The "slugTransfrom" function is used to convert the title into a URL-friendly string
+        // The "slugTransform" function is used to convert the title into a URL-friendly string
         // The "setValue" function updates the value of the "slug" field
         // The "{ shouldValidate: true }" ensures that validation for the "slug" field is triggered after updating it
-        setValue("slug", slugTransfrom(value.title, { shouldValidate: true }));
+        setValue("slug", slugTransform(value.title, { shouldValidate: true }));
       }
     });
     return () => {
       // Cleanup function to unsubscribe from the watch when the component is unmounted or dependencies change
       subscription.unsubscribe();
     };
-  }, [watch, slugTransfrom, setValue]);
+  }, [watch, slugTransform, setValue]);
 
   return (
     <form

@@ -5,9 +5,12 @@ import App from "./App.jsx";
 import store from "./store/store.js";
 import { Provider } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./components/pages/Home.jsx";
-import Login from "./components/Login.jsx";
-import Signup from "./components/Signup.jsx";
+import { AuthLayout, Login, Signup } from "./components/index.js";
+import Home from "./pages/Home.jsx";
+import AllPosts from "./pages/AllPosts.jsx";
+import AddPost from "./pages/AddPost.jsx";
+import EditPost from "./pages/EditPost.jsx";
+import Post from "./pages/Post.jsx";
 
 const router = createBrowserRouter([
   {
@@ -20,11 +23,59 @@ const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <Login />,
+        element: (
+          <AuthLayout authentication={false}>
+            <Login />
+          </AuthLayout>
+        ),
       },
       {
         path: "/signup",
-        element: <Signup />,
+        element: (
+          <AuthLayout authentication={false}>
+            <Signup />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/all-posts",
+        element: (
+          <AuthLayout authentication={true}>
+            <AllPosts />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/add-post",
+        element: (
+          <AuthLayout authentication={true}>
+            <AddPost />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/edit-post/:slug",
+        element: (
+          <AuthLayout authentication={true}>
+            <EditPost />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/post/:slug",
+        element: (
+          <AuthLayout authentication={true}>
+            <Post />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/add-post",
+        element: (
+          <AuthLayout authentication={true}>
+            <AddPost />
+          </AuthLayout>
+        ),
       },
     ],
   },

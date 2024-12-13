@@ -41,7 +41,7 @@ export class Service {
 
   async updatePost(slug, { title, content, featuredImage, status }) {
     try {
-      const updatedPost = await this.databases.updateDocument(
+       return await this.databases.updateDocument(
         conf.appwriteDatabaseId,
         conf.apperiteCollectionId,
         slug,
@@ -52,7 +52,7 @@ export class Service {
           status,
         }
       );
-      return { success: true, post: updatedPost };
+
     } catch (error) {
       console.error(`Error in updating Post: ${error}`);
       return {
@@ -81,12 +81,12 @@ export class Service {
 
   async getPost(slug) {
     try {
-      const post = this.databases.getDocument(
+      return this.databases.getDocument(
         conf.appwriteDatabaseId,
         conf.apperiteCollectionId,
         slug
       );
-      return { success: true, post };
+      
     } catch (error) {
       console.error(`Error in fetching post: ${error.message}`);
       return {
@@ -98,7 +98,7 @@ export class Service {
 
   async getPosts(quries = Query.equal[("status", "active")]) {
     try {
-      await this.databases.listDocuments(
+      return await this.databases.listDocuments(
         conf.appwriteDatabaseId,
         conf.apperiteCollectionId,
         quries
@@ -116,15 +116,11 @@ export class Service {
 
   async uploadFile(file) {
     try {
-      const fileDocument = await this.bucket.createFile(
+      return await this.bucket.createFile(
         conf.apprriteBucketId,
         ID.unique(),
         file
       );
-      return {
-        success: true,
-        file: fileDocument,
-      };
     } catch (error) {
       console.error("Error uploading file:", error);
       return {
@@ -146,10 +142,10 @@ export class Service {
     }
   }
 
-  getFilePreview(fileId){
-    return this.bucket.getFilePreview(conf.apprriteBucketId, fileId)
+  getFilePreview(fileId) {
+    console.log(fileId);
+    return this.bucket.getFilePreview(conf.apprriteBucketId, fileId);
   }
-
 }
 
 const service = new Service();
