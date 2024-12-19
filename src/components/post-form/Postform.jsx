@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import appwriteService from "../../appwrite/config";
 
+
 const Postform = ({ post }) => {
   const { register, handleSubmit, watch, control, setValue, getValues } =
     useForm({

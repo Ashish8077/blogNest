@@ -1,6 +1,7 @@
 import React from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { Controller } from "react-hook-form";
+import conf from "../conf/conf";
 const RTE = ({ name, control, label, defaultValue = "" }) => {
   return (
     <div className="w-full">
@@ -15,7 +16,7 @@ const RTE = ({ name, control, label, defaultValue = "" }) => {
         control={control} // React Hook Form control passed from the parent component (useForm hook).
         render={({ field: { onChange } }) => (
           <Editor
-            apiKey="8im9xa14ithgrgoomgp9nt2tz7s3hvs6s9zu0kvqyg3ycvng"
+            apiKey={conf.tinymceApiKey}
             initialValue={defaultValue}
             init={{
               height: 500,

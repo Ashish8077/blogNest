@@ -4,6 +4,7 @@ import { PostCard } from "../components";
 import { fetchPosts } from "../store/postSlice";
 import { useDispatch, useSelector } from "react-redux";
 
+
 const AllPosts = () => {
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts.posts);

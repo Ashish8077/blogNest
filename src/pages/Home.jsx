@@ -3,6 +3,7 @@ import { PostCard } from "../components";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts } from "../store/postSlice";
 
+
 const Home = () => {
   const dispatch = useDispatch();
 
