@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import appwriteService from "../appwrite/config";
 import { CustomBtn } from "../components";
 import parser from "html-react-parser";
+import toast from "react-hot-toast";
 
 const Post = () => {
   const [post, setPost] = useState(null);
@@ -22,9 +23,15 @@ const Post = () => {
   }, [slug, navigate]);
 
   const deletePost = () => {
-    console.log(post.$id)
     appwriteService.deletePost(post.$id).then((status) => {
-      if (status) {
+      if (status.success) {
+        toast(status.message, {
+          icon: "❌",
+          style: {
+            background: "#Ef4444",
+            color: "#ffffff",
+          },
+        });
         appwriteService.deleteFile(post.featuredImage);
         navigate("/");
       }

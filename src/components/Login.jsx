@@ -10,12 +10,12 @@ const Login = () => {
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
   const [error, setError] = useState();
-  
 
   const login = async (data) => {
     try {
       setError("");
       const session = await authService.login(data);
+
       if (session.message) {
         const userData = await authService.getCurrentUser();
         if (userData) {
@@ -26,6 +26,7 @@ const Login = () => {
         setError(session.error);
       }
     } catch (error) {
+      console.log(error.message);
       setError(error.message);
     }
   };

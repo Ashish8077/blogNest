@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { CustomInput, CustomBtn, Select, RTE } from "../index";
 import { useNavigate } from "react-router-dom";
@@ -15,12 +15,15 @@ const Postform = ({ post }) => {
         status: post?.status || "active",
       },
     });
+  const [postCreation, setPostCreation] = useState(false);
+  const [postUpdation, setPostUpdation] = useState(false);
   const navigate = useNavigate();
   const userData = useSelector((state) => state.auth.userData);
 
   const submit = async (data) => {
     //if an existing post is being edited
     if (post) {
+      setPostUpdation(true);
       //data.image This will log the FileList object
       //data.image[0] Access the first selected file
       const file = data.image[0]
@@ -36,9 +39,13 @@ const Postform = ({ post }) => {
       });
       if (dbPost) {
         // If the update is successful, navigate to the updated post
+        setPostUpdation(false);
         navigate(`/post/${dbPost.$id}`);
+      } else {
+        setPostUpdation(false);
       }
     } else {
+      setPostCreation(true);
       //if post is not exist
       const file = await appwriteService.uploadFile(data.image[0]);
       if (file) {
@@ -51,8 +58,11 @@ const Postform = ({ post }) => {
         });
         // If the new post is successfully created
         if (dbPost.success) {
+          setPostCreation(false);
           // Navigate to the newly created post
           navigate(`/post/${dbPost.post.$id}`);
+        } else {
+          setPostCreation(false);
         }
       }
     }
@@ -129,8 +139,23 @@ const Postform = ({ post }) => {
         <CustomBtn
           type="submit"
           bgColor={post ? "bg-green-500" : undefined}
+          disabled={postCreation}
           className="w-full">
-          {post ? "Update" : "Submit"}
+          {postCreation ? (
+            <div className="flex justify-center items-center ">
+              <div className="w-5 h-5 border-2 border-t-2 border-blue-500 border-t-white border-solid rounded-full animate-spin mr-2"></div>
+              <span>Creating Post...</span>
+            </div>
+          ) : postUpdation ? (
+            <div className="flex items-center justify-center ">
+              <div className="w-5 h-5 border-2 border-t-2 border-yellow-500 border-t-white border-solid rounded-full animate-spin mr-2"></div>
+              <span>Updating Post...</span>
+            </div>
+          ) : post ? (
+            "Update"
+          ) : (
+            "Submit"
+          )}
         </CustomBtn>
       </div>
     </form>

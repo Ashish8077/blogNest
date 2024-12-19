@@ -19,7 +19,7 @@ const Header = () => {
     { name: "Add Post", slug: "/add-post", active: authStatus },
   ];
   return (
-    <header className="py-3 shadow bg-gray-300 ">
+    <header className="py-3 shadow bg-gray-300 sticky top-0 z-50 ">
       <nav className="flex items-center">
         <div className=" flex w-full justify-between items-center  sm:max-w-[200px]">
           <div className="ml-3 sm:ml-5 ">
@@ -47,7 +47,7 @@ const Header = () => {
           }   sm:flex sm:ml-auto sm:w-auto sm:flex-row sm:static sm:gap-0 mr-4 `}>
           {navItems.map((item) =>
             item.active ? (
-              <li key={item.name}>
+              <li key={item.name} className="font-semibold">
                 <button
                   className="inline-block px-6 py-2 duration-200 hover:bg-blue-600 rounded-full hover:text-white"
                   onClick={() => {
